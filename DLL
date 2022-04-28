@@ -1,0 +1,138 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+struct alamat{
+	string jalan, kelurahan, kecamatan, kota;
+};
+
+struct Member{
+	int id;
+	string nama, uname, email;
+	
+	alamat rumah;
+	
+	Member *prev;
+	Member *next;
+};
+
+Member *head, *tail, *cur, *nodeBaru, *del;
+
+void BuatDLL(int id, string data[7]){
+	head=new Member;
+	head->id=id;
+	head->nama=data[0];
+	head->uname=data[1];
+	head->email=data[2];
+	head->rumah.jalan=data[3];
+	head->rumah.kelurahan=data[4];
+	head->rumah.kecamatan=data[5];
+	head->rumah.kota=data[6];
+	head->prev=NULL;
+	head->next=NULL;
+	tail=head;
+}
+
+void TampilDLL(){
+	if(head==NULL){
+		cout<<"DLL masih kosong"<<endl;
+	}
+	else{
+		cur=head;
+		while(cur!=NULL){
+			cout<<"Nama Member : "<<cur->nama<<endl;
+			cout<<"Username    : "<<cur->uname<<endl;
+			cout<<"Email       : "<<cur->email<<endl;
+			cout<<"ID          : "<<cur->id<<endl;
+			cout<<"Alamat      : "<<cur->rumah.jalan<<endl;
+			cout<<"Kelurahan   : "<<cur->rumah.kelurahan<<endl;
+			cout<<"Kecamatan   : "<<cur->rumah.kecamatan<<endl;
+			cout<<"Kota        : "<<cur->rumah.kota<<endl;
+			cout<<endl;
+			cur=cur->next;
+		}
+	}
+}
+
+void tmbhdpn(int id, string data[7]){
+	if(head==NULL){
+		cout<<"DLL masih kosong"<<endl;
+	}
+	else{
+		nodeBaru=new Member();
+		nodeBaru->id = id;
+		nodeBaru->nama=data[0];
+		nodeBaru->uname=data[1];
+		nodeBaru->email=data[2];
+		nodeBaru->rumah.jalan=data[3];
+		nodeBaru->rumah.kelurahan=data[4];
+		nodeBaru->rumah.kecamatan=data[5];
+		nodeBaru->rumah.kota=data[6];
+		nodeBaru->prev=NULL;
+		nodeBaru->next=head;
+		head->prev=nodeBaru;
+		head=nodeBaru;
+	}
+}
+
+void tmbhblkg(int id, string data[7]){
+	if(head==NULL){
+		cout<<"DLL masih kosong"<<endl;
+	}
+	else{
+		nodeBaru=new Member();
+		nodeBaru->id = id;
+		nodeBaru->nama=data[0];
+		nodeBaru->uname=data[1];
+		nodeBaru->email=data[2];
+		nodeBaru->rumah.jalan=data[3];
+		nodeBaru->rumah.kelurahan=data[4];
+		nodeBaru->rumah.kecamatan=data[5];
+		nodeBaru->rumah.kota=data[6];
+		nodeBaru->prev=tail;
+		nodeBaru->next=NULL;
+		tail->next=nodeBaru;
+		tail=nodeBaru;
+	}
+}
+
+void Hapusdpn(){
+	if(head==NULL){
+		cout<<"DLL masih kosong"<<endl;
+	}
+	else{
+		del=head;
+		head=head->next;
+		head->prev=NULL;
+		delete del;
+	}
+}
+void Hapusblkg(){
+	if(head==NULL){
+		cout<<"DLL masih kosong"<<endl;
+	}
+	else{
+		del=tail;
+		tail=tail->prev;
+		tail->next=NULL;
+		delete del;
+	}
+}
+
+int main(){
+	string newMember[7]={"Akmal", "Amay", "akmal@gmail.com", "Jl. jalan", "utan kayu", "matraman", "jaktim"};
+	BuatDLL(1052, newMember);
+	TampilDLL();
+	cout<<"-----------------------"<<endl;
+	string newMember1[7]={"Aziz", "zzzz", "zzzz@gmail.com", "Jl. jalan", "kel", "kec", "kota"};
+	tmbhdpn(1053, newMember1);
+	string newMember2[7]={"minjeong", "winter", "brrrrr@gmail.com", "Jl. jalan", "aku", "sarang", "you"};
+	tmbhblkg(1054, newMember2);
+	TampilDLL();
+	cout<<"-----------------------"<<endl;
+	Hapusblkg();
+	TampilDLL();
+	cout<<"-----------------------"<<endl;
+	Hapusdpn();
+	TampilDLL();
+}
